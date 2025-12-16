@@ -1,0 +1,5 @@
+- name: Install Windows packages
+  hosts: windows
+  gather_facts: no
+  roles:
+    - windows
