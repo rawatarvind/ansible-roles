@@ -1,0 +1,39 @@
+---
+- name: Add Docker GPG apt Key
+  ansible.builtin.apt_key:
+    url: "{{ docker_gpg_apt_key_download_url }}"
+    state: present
+
+- name: Add repository into sources list
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
+    state: present
+    filename: docker
+
+- name: Install Docker 23.0.1-1
+  ansible.builtin.apt:
+    name:
+      - "docker-ce={{ docker_ce_version }}"
+      - "docker-ce-cli={{ docker_ce_cli_version }}"
+      - containerd.io
+    state: present
+    update_cache: true
+  notify:
+    - Restart docker service
+
+- name: Setup docker user
+  ansible.builtin.user:
+    name: docker
+    groups: "docker,sudo"
+    append: true
+
+- name: Install Docker-Compose&Set Permission
+  ansible.builtin.get_url:
+    url: "{{ docker_compose_download_url }}"
+    dest: /usr/local/bin/docker-compose
+    mode: '755'
+
+- name: Create Docker-Compose symlink
+  ansible.builtin.command:
+    cmd: ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+    creates: /usr/bin/docker-compose
