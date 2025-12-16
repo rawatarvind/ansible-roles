@@ -1,0 +1,8 @@
+---
+- name: Setup system (users + packages)
+  hosts: Ubuntu_host
+  become: yes
+  roles:
+     - { role: Installed_pkg, tags: ['install_pkg'] }
+     - { role: user_mgmt, tags: ['user'] }
+     - { role: ssh_config, tags: ['ssh'] }

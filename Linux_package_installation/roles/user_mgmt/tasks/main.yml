@@ -1,0 +1,34 @@
+---
+
+# 1. Create the custom group with fixed GID
+- name: Ensure additional group exists with custom GID
+  ansible.builtin.group:
+    name: "{{ user_group }}"
+    gid: "{{ group_gid }}"
+    state: present
+
+# 2. Create user (this will automatically create a user-named group)
+- name: Create user account
+  ansible.builtin.user:
+    name: "{{ new_user }}"
+    uid: "{{ user_uid }}"
+    shell: /bin/bash
+    password: "{{ new_password | password_hash('sha512') }}"
+    comment: "{{ username }}"
+    state: present
+
+# 3. Add the user to the custom group
+- name: Add user to additional group
+  ansible.builtin.user:
+    name: "{{ new_user }}"
+    groups: "{{ user_group }}"
+    append: yes
+
+- name: Configure Sudo privilages safely
+  ansible.builtin.template:
+    src: sudoers.j2
+    dest: "/etc/sudoers.d/{{ new_user }}"
+    owner: root
+    group: root
+    mode: '0440'
+    validate: '/usr/sbin/visudo -cf %s'

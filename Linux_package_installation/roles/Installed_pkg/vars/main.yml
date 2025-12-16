@@ -1,0 +1,33 @@
+common_packages:
+  - mplayer
+  - libtinyxml-dev
+  - usbguard
+  - libreoffice
+  - openvpn
+  - okular
+  - g++
+  - locate
+  - gcc
+  - curl
+  - make
+  - gtk*
+  - glade
+  - postgresql
+  - libopencv-dev
+  - libgtkmm-3.0-dev
+  - openssh-server
+  - vim
+  - git
+  - imagemagick
+  - net-tools
+  - ethtool 
+  - wireshark-qt
+  - ifupdown
+  - universal-ctags
+  - meld
+  - autofs
+  - subversion
+  - vlc
+
+snap_packages:
+  - teams-for-linux

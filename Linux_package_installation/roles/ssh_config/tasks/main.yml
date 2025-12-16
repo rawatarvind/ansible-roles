@@ -1,0 +1,13 @@
+- name: Configure SSH for root and user
+  ansible.builtin.blockinfile:
+    path: /etc/ssh/sshd_config
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - SSH CONFIG"
+    block: |
+      PermitRootLogin yes
+      PasswordAuthentication yes
+
+      Match user {{ new_user }}
+          PasswordAuthentication yes
+    backup: yes
+    insertafter: EOF
+  notify: Restart ssh

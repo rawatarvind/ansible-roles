@@ -1,0 +1,61 @@
+---
+# vars file for windows
+exe_list:
+  - name: "TeamViewer_Setup_x64.exe"
+    args: "/S"
+    creates_path: 'C:\Program Files\TeamViewer\TeamViewer.exe'
+ 
+  - name: "Thunderbird Setup 102.12.0.exe"
+    args: "/S"
+    creates_path: 'C:\Program Files\Mozilla Thunderbird\thunderbird.exe'
+
+  - name: "chrome-64-bit.exe"
+    args: "/silent /install"
+    creates_path: 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+
+  - name: "Firefox Installer.exe"
+    args: "/S"
+    creates_path: 'C:\Program Files\Mozilla Firefox\firefox.exe'
+
+  - name: "7z2501-x64.exe"
+    args: "/S"
+    creates_path: 'C:\Program Files\7-Zip\7zG.exe'
+
+  - name: "VLC_media_player_V3.0.21.exe"
+    args: "/S"
+    creates_path: 'C:\Program Files\VideoLAN\VLC\vlc.exe'
+
+#  - name: "AnyDesk.exe"
+#    args: "/S"
+#    creates_path: 'C:\Program Files (x86)\AnyDesk\AnyDesk.exe'
+
+  - name: "openvpn-install-2.4.8-I602-Win10.exe"
+    args: "/S"
+    creates_path: 'C:\Program Files\OpenVPN\bin\openvpn.exe'
+
+
+  - name: "FreeFileSync_5.10_setup.exe"
+    args: "/S"
+    creates_path: 'C:\Program Files\FreeFileSync\FreeFileSync.exe'
+
+#  - name: "WPSOffice_11.2.0.9906.exe"
+#    args: "/silent"
+#    creates_path: 'C:\Users\vehant\AppData\Local\Kingsoft\WPS Office\11.2.0.9906\office6\wps.exe'
+
+#  - name: "FoxitReader331_enu_Setup.exe"
+#    args: "/silent"
+#    creates_path: 'C:\Program Files (x86)\Foxit Software\Foxit Reader\FoxitReader.exe'
+
+  - name: "AdbeRdr1012_en_US.exe"
+    args: "/sAll /rs /rps /msi /norestart"
+    creates_path: 'C:\Program Files (x86)\Adobe\Reader 10.0\Reader\AcroRd32.exe'
+
+msi_list:
+       - name: "MasterPDFEditor-setup-x64.msi"
+       - name: "LibreOffice_25.8.3_Win_x86-64.msi"
+
+msi_install:
+
+       - "C:\\Users\\vehant\\Downloads\\MasterPDFEditor-setup-x64.msi"
+       - "C:\\Users\\vehant\\Downloads\\LibreOffice_25.8.3_Win_x86-64.msi"
+

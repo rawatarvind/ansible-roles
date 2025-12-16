@@ -1,0 +1,68 @@
+---
+- name: Step 1. Update the Repolist.
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Step 2. Install listed packages
+  ansible.builtin.apt:
+    name: "{{ common_packages }}"
+    state: present
+  when: ansible_distribution == "Ubuntu"
+  register: apt_result
+  until: apt_result is success
+  retries: 5
+  delay: 10
+
+
+- name: Step 3. Copy .deb package in remote hosts.
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: /tmp/
+  with_fileglob:
+    - "{{ role_path }}/files/*.deb"
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Step 4. Install all local .deb packages
+  ansible.builtin.apt:
+    deb: "/tmp/{{ item | basename }}"
+  with_fileglob:
+    - "{{ role_path }}/files/*.deb"
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Step 5. ADD USBguard Rules 
+  ansible.builtin.blockinfile:
+    path: /etc/usbguard/rules.conf
+    block: |
+      allow with-interface one-of {03:01:02}
+      allow with-interface one-of {03:01:01}
+    create: yes
+    backup: yes
+  notify: Restart USBGuard
+
+- name: Step 6. Generate and append USBGuard policy
+  ansible.builtin.shell: "usbguard generate-policy >> /etc/usbguard/rules.conf"
+  args:
+    creates: /etc/usbguard/rules.conf
+  notify: Restart USBGuard
+
+- name: step 7. Configure lid switch behavior
+  ansible.builtin.blockinfile:
+    path: /etc/systemd/logind.conf
+    block: |
+      HandleLidSwitch=ignore
+      HandleLidSwitchExternalPower=ignore
+      HandleLidSwitchDocked=ignore
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+    create: yes
+    backup: yes
+  notify: Restart systemd-logind
+
+- name:  Ensure FusionInventory server entry exists in agent.cfg
+  ansible.builtin.lineinfile:
+    path: /etc/fusioninventory/agent.cfg
+    regexp: '^server\s*='
+    line: 'server = http://10.77.1.14/glpi/plugins/fusioninventory/front/plugin_fusioninventory.communication.php'
+    create: yes
+    backup: yes
+  notify: Restart FusionInventory Agent
+

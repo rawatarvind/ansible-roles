@@ -1,0 +1,15 @@
+- name: Restart USBGuard
+  ansible.builtin.service:
+    name: usbguard
+    state: restarted
+
+- name: Restart systemd-logind
+  ansible.builtin.service:
+    name: systemd-logind
+    state: restarted
+
+- name: Restart FusionInventory Agent
+  ansible.builtin.service:
+    name: fusioninventory-agent
+    state: restarted 
+      

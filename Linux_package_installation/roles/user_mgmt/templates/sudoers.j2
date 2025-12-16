@@ -1,0 +1,11 @@
+{{ new_user }} ALL=(ALL) NOPASSWD: /usr/sbin/openvpn *
+{{ new_user }} ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart *
+{{ new_user }} ALL=(ALL) NOPASSWD: /usr/bin/systemctl start onedrive@alex.service
+{{ new_user }} ALL=(ALL) NOPASSWD: /usr/bin/systemctl stop onedrive@alex.service
+{{ new_user }} ALL=(ALL) NOPASSWD: /usr/bin/mount *
+{{ new_user }} ALL=(ALL) NOPASSWD: /usr/bin/umount *
+{{ new_user }} ALL=(ALL) NOPASSWD: /usr/bin/tail *
+{{ new_user }} ALL=(ALL) NOPASSWD: /usr/bin/less *
+{{ new_user }} ALL=(ALL) NOPASSWD: /usr/bin/killall *
+{{ new_user }} ALL=(ALL) NOPASSWD: /usr/bin/sh *
+
