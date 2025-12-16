@@ -1,0 +1,9 @@
+# Windows installers
+*.exe
+*.msi
+*.zip
+*.tar.gz
+*.7z
+
+# Windows package bundles
+windows/files/
