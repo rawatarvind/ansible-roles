@@ -25,6 +25,7 @@ Start-Service WinRM
 # Enable Firewall rule
 Write-Host "Enabling WinRM firewall rule..." -ForegroundColor Cyan
 Enable-NetFirewallRule -Name "WINRM-HTTP-In-TCP"
+Enable-NetFirewallRule -Name FPS-ICMP4-ERQ-In
 
 Write-Host "WinRM setup completed successfully ✅" -ForegroundColor Green
 
